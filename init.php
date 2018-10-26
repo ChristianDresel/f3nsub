@@ -1,20 +1,19 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 include("config.php");
-require __DIR__.'/vendor/autoload.php';
-if ($initaktiv == 1)
-{
-	$excluded = IPTools\Network::parse($_GET['subnet'])->moveTo($_GET['size']);
-	foreach($excluded as $network) {
-        	echo (string)$network . '<br>';
-		$eintrag = "INSERT INTO ip (ip, assign, last_announce) VALUES ('$network', '0', '0')";
-		$eintragen = mysqli_query($db, $eintrag);
-	}
+require __DIR__ . '/vendor/autoload.php';
 
-}
-else
-{
+if ($initaktiv == 1) {
+	$networks = IPTools\Network::parse($_GET['subnet'])->moveTo($_GET['size']);
+	$stmt = $dbh->prepare("INSERT INTO ip (ip) VALUES (:network)");
+	$counter = 0;
+	foreach ($networks as $network) {
+		$stmt->bindParam(':network', $network);
+		$stmt->execute();
+		$counter++;
+	}
+	echo "Es wurden $counter Subnetze von " . array_shift($networks) . " bis " . array_pop($networks) . " in die Datenbank eingetragen";
+} else {
 	echo 'Bitte $initaktiv in config.php auf 1 setzen';
 }
-?>
+
+//2a0c:b642:1030::/44

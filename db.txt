@@ -28,10 +28,10 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `ip` (
   `id` int(10) NOT NULL,
-  `ip` varchar(255) NOT NULL,
-  `assign` tinyint(1) NOT NULL,
-  `last_announce` int(15) NOT NULL,
-  `act_announce` tinyint(1) NOT NULL
+  `ip` varchar(50) NOT NULL,
+  `assign` tinyint(1) NOT NULL default 0,
+  `last_announce` int(15) NOT NULL default 0,
+  `act_announce` tinyint(1) NOT NULL default 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
