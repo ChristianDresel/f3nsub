@@ -22,7 +22,7 @@ if(!isset($_POST["erg"]) && !isset($_POST["send"])) {
 		  </form>';
 }
 elseif ($_SESSION["erg"] == $_POST['erg'] && $_POST['send'] == true) {
-	$query = $dbh->query("SELECT ip FROM ip WHERE assign = '0' LIMIT 1");
+	$query = $dbh->query("SELECT ip FROM ip WHERE assign = '0' ORDER BY RAND() LIMIT 1");
 	$ip = $query->fetch();
 	$ip = $ip[0];
 	if($ip) {
